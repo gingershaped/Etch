@@ -1,2 +1,6 @@
 tests/
 __pycache__
+venv/
+poetry.lock
+replit.nix
+.replit
