@@ -2,6 +2,7 @@ from etch.parser.parser import parse
 from etch.utils import *
 from etch.instructions import *
 from operator import *
+import importlib
 
 MATH = {
     "+": add,
@@ -24,10 +25,15 @@ LOGIC = {
 
 class Interpreter():
     def __init__(self):
-        self.context = Context(self, None)
-        self.currentContext = self.context
+        self.__context__ = Context(None)
+        self.currentContext = self.__context__
         for b in BUILTINS:
-            self.context.functions[b] = BUILTINS[b]
+            self.__context__.functions[b] = BUILTINS[b]
+
+        self.loadModule("etch.stdlib")
+    def loadModule(self, path):
+        m = importlib.import_module(path)
+        m.setup(self)
 
     def processParams(self, params):
         # Helper function for parameters
@@ -58,6 +64,8 @@ class Interpreter():
             return VariableReadInstruction(self, params)
         elif node == "SOMECREMENT":
             return SomecrementInstruction(self, *params)
+        elif node == "IN_PLACE":
+            return InPlaceModifyInstruction(self, params[0], MATH[params[1][0]], self.processInstruction(params[2]))
 
     def processExpression(self, instruction):
         node, params = instruction
@@ -76,12 +84,14 @@ class Interpreter():
             return ForeverInstruction(self, self.processStatements(params))
         elif node == "COUNT":
             return CountInstruction(self, self.processInstruction(params[1]), self.processStatements(params[0]))
+        elif node == "WHILE":
+            return WhileInstruction(self, self.processInstruction(params[0]), self.processStatements(params[1]))
     
         
     def interpret(self, ast):
-        print(ast)
         return [self.processInstruction(i) for i in ast]
     def execute(self, instructions):
+        print(instructions)
         for i in instructions:
             i.execute(self.currentContext)
     def run(self, code):

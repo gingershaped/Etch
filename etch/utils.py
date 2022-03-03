@@ -1,11 +1,10 @@
 from etch.instructions import Instruction
 
 class Context():
-    def __init__(self, interpreter, parent):
+    def __init__(self, parent):
         self.vars = {}
         self.functions = {}
         self.classes = {}
-        self.interpreter = interpreter
         self.parent = parent
         self.globals = []
     def getFunction(self, name):
@@ -38,9 +37,6 @@ class Context():
         else:
             self.vars[name] = value
 
-class Class(Context):
-    def __init__(self, interpreter, parent):
-        super(interpreter, parent)
 
 class ParameterWrapper():
     def __init__(self, value):

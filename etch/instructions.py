@@ -64,6 +64,14 @@ class CountInstruction(Instruction):
         for x in range(self.iterations.execute(context)):
             for i in self.statements:
                 i.execute(context)
+class WhileInstruction(Instruction):
+    def __init__(self, interpreter, condition, statements):
+        self.condition = condition
+        self.statements = statements
+    def execute(self, context):
+        while self.condition.execute(context):
+            for i in self.statements:
+                i.execute(context)
 
 class AssignInstruction(Instruction):
     def __init__(self, interpreter, name, value):
@@ -82,6 +90,14 @@ class SomecrementInstruction(Instruction):
         self.name = name
     def execute(self, context):
         context.setVar(self.name, context.getVar(self.name) + 1)
+class InPlaceModifyInstruction(Instruction):
+    def __init__(self, interpreter, name, op, expr):
+        self.name = name
+        self.expr = expr
+        self.op = op
+    def execute(self, context):
+        context.setVar(self.name, self.op(context.getVar(self.name), self.expr.execute(context)))
+
 
 BUILTINS = {
     "out": OutInstruction

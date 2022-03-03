@@ -24,7 +24,8 @@ class EtchParser(Parser):
                 o.append(p[1])
         return o
 
-    @_("command NEWLINE")
+    @_("command NEWLINE",
+       "command SEMICOLON")
     def statement(self, p):
         return p.command
 
@@ -40,7 +41,8 @@ class EtchParser(Parser):
        "forever_block",
        "count_block",
        "assign",
-       "somecrement")
+       "somecrement",
+       "inplace")
     def command(self, p):
         return p[0]
 
@@ -92,7 +94,8 @@ class EtchParser(Parser):
     def elif_block(self, p):
         return (p.command, p.statements)
 
-    @_("WHILE command DO statements DONE")
+    @_("WHILE command DO statements DONE",
+       "WHILE command OPEN_CB statements CLOSE_CB")
     def while_block(self, p):
         return ("BLOCK", ("WHILE", [p[1], p[3]]))
     @_("FOR ID IN command DO statements DONE")
@@ -133,6 +136,13 @@ class EtchParser(Parser):
     def somecrement(self, p):
         return ("SOMECREMENT", (p[1], p[0]))
 
+    @_("ID IP_ADD expr",
+       "ID IP_SUB expr",
+       "ID IP_MUL expr",
+       "ID IP_DIV expr")
+    def inplace(self, p):
+        return ("IN_PLACE", [p.ID, p[1], p.expr])
+
     @_("ID ASSIGN expr")
     def assign(self, p):
         return ("ASSIGN", [p[0], p[2]])
@@ -141,9 +151,11 @@ class EtchParser(Parser):
     def expr(self, p):
         return ("VARIABLE", p[0])
     @_("ID COLON ID args SEMICOLON",
-       "empty COLON ID args SEMICOLON")
+       "empty COLON ID args SEMICOLON",
+       "ID COLON ID empty SEMICOLON",
+       "empty COLON ID empty SEMICOLON")
     def expr(self, p):
-        return ("EXPRESSION", ("FUNCTION", (p[0], p.ID, p.args)))
+        return ("EXPRESSION", ("FUNCTION", (p[0], p[2], p[3] if p[3] else [])))
     
 
     @_("INTEGER",

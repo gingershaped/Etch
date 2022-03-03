@@ -37,6 +37,10 @@ class EtchLexer(Lexer):
         FLOORDIV,
         MOD,
         EXP,
+        IP_ADD,
+        IP_SUB,
+        IP_MUL,
+        IP_DIV,
         LE,
         GE,
         LT,
@@ -50,6 +54,8 @@ class EtchLexer(Lexer):
         STRING,
         OPEN_SQ,
         CLOSE_SQ,
+        OPEN_CB,
+        CLOSE_CB,
         COMMA,
         ID,
     }
@@ -57,12 +63,19 @@ class EtchLexer(Lexer):
     ignore = " \t"
 
     NEWLINE = r"\n"
+
     OPEN_SQ = r"\["
     CLOSE_SQ = r"\]"
-    COMMA = r","
+    OPEN_CB = r"\{"
+    CLOSE_CB = r"\}"
     
     INCREMENT = r"\+\+"
     DECREMENT = r"--"
+
+    IP_ADD = r"\+="
+    IP_SUB = r"-="
+    IP_MUL = r"\*="
+    IP_DIV = r"/="
     
     ADD    = r'\+'
     SUB   = r'-'
@@ -82,6 +95,7 @@ class EtchLexer(Lexer):
     ASSIGN = r"="
     COLON = r":"
     SEMICOLON = r";"
+    COMMA = r","
     
     INTEGER = r'\d+'
     FLOAT = r'((\d*\.\d+)(E[\+-]?\d+)?|([1-9]\d*E[\+-]?\d+))'
