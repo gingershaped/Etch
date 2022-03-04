@@ -2,6 +2,7 @@ from sly import Parser
 from etch.parser.lexer import EtchLexer
 
 class EtchParser(Parser):
+    debugfile = "parser.out"
     tokens = EtchLexer.tokens
 
     precedence = (
@@ -150,12 +151,14 @@ class EtchParser(Parser):
     @_("ID")
     def expr(self, p):
         return ("VARIABLE", p[0])
-    @_("ID COLON ID args SEMICOLON",
-       "empty COLON ID args SEMICOLON",
-       "ID COLON ID empty SEMICOLON",
-       "empty COLON ID empty SEMICOLON")
+    @_("expr COLON ID args SEMICOLON",
+       "expr COLON ID SEMICOLON")
     def expr(self, p):
-        return ("EXPRESSION", ("FUNCTION", (p[0], p[2], p[3] if p[3] else [])))
+        return ("EXPRESSION", ("FUNCTION", (p[0], p[2], p[3] if p[3] != ";" else [])))
+    @_("COLON ID args SEMICOLON",
+       "COLON ID SEMICOLON")
+    def expr(self, p):
+        return ("EXPRESSION", ("FUNCTION", (None, p[1], p[2] if p[2] != ";" else [])))
     
 
     @_("INTEGER",

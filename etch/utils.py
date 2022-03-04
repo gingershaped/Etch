@@ -1,28 +1,12 @@
-from etch.instructions import Instruction
+class Instruction:
+    def __init__(self, interpreter):
+        self.interpreter = interpreter
 
 class Context():
     def __init__(self, parent):
         self.vars = {}
-        self.functions = {}
-        self.classes = {}
         self.parent = parent
         self.globals = []
-    def getFunction(self, name):
-        if name in self.functions.keys():
-            return self.functions[name]
-        else:
-            if self.parent:
-                return self.parent.getFunction(name)
-            else:
-                raise KeyError
-    def getClass(self, name):
-        if name in self.classes.keys():
-            return self.classes[name]
-        else:
-            if self.parent:
-                return self.parent.getClass(name)
-            else:
-                raise KeyError
     def getVar(self, name):
         if name in self.vars.keys():
             return self.vars[name]
@@ -44,6 +28,8 @@ class ParameterWrapper():
     def execute(self, context):
         if type(self.value) == Instruction:
             return self.value.execute(context)
+        elif type(self.value) == list:
+            return [i.execute(context) for i in self.value]
         else:
             return self.value
 

@@ -115,7 +115,7 @@ class EtchLexer(Lexer):
         self.lineno += len(t.value)
         return t
 
-    ID = r'[a-zA-Z_][a-zA-Z0-9_]*'
+    ID = r':?[a-zA-Z_][a-zA-Z0-9_]*'
 
     ID["if"] = IF
     ID["is"] = IS

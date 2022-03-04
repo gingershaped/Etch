@@ -1,9 +1,9 @@
 from etch.parser.parser import parse
 from etch.utils import *
 from etch.instructions import *
+import etch.mixins
 from operator import *
 import importlib
-
 MATH = {
     "+": add,
     "-": sub,
@@ -28,9 +28,10 @@ class Interpreter():
         self.__context__ = Context(None)
         self.currentContext = self.__context__
         for b in BUILTINS:
-            self.__context__.functions[b] = BUILTINS[b]
+            self.__context__.vars[b] = BUILTINS[b]
 
         self.loadModule("etch.stdlib")
+        
     def loadModule(self, path):
         m = importlib.import_module(path)
         m.setup(self)
@@ -74,7 +75,7 @@ class Interpreter():
         elif node == "LOGIC":
             return PartialWrapper(LOGIC[params[0]], *self.processStatements(params[1]))
         elif node == "FUNCTION":
-            return FunctionCallInstruction(self, params[0], params[1], *self.processParams(params[2]))
+            return FunctionCallInstruction(self, self.processInstruction(params[0]), params[1], *self.processStatements(params[2]))
             
     def processBlock(self, instruction):
         node, params = instruction
@@ -89,6 +90,7 @@ class Interpreter():
     
         
     def interpret(self, ast):
+        print(ast)
         return [self.processInstruction(i) for i in ast]
     def execute(self, instructions):
         print(instructions)

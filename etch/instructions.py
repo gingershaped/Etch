@@ -1,21 +1,22 @@
-class Instruction:
-    def __init__(self, interpreter):
-        self.interpreter = interpreter
+from etch.api import MIXINS
+from etch.utils import Instruction
+
 class FunctionCallInstruction(Instruction):
-    def __init__(self, interpreter, cls, name, *args):
+    def __init__(self, interpreter, target, function, *args):
         self.interpreter = interpreter
-        self.cls = cls
-        self.name = name
+        self.target = target
+        self.function = function
         self.args = args
     def execute(self, context):
-        try:
-            if self.cls:
-                i = context.getClass(self.cls).getFunction(self.name)(self.interpreter, *[i.execute(context) for i in self.args])
-            else:
-                i = context.getFunction(self.name)(self.interpreter, *[i.execute(context) for i in self.args])
-        except KeyError:
-            raise ValueError("Undefined function: " + self.name) from None
-        return i.execute(context)
+        if self.target:
+            t = self.target.execute(context)
+            try:
+                return getattr(t, self.function)(*[i.execute(context) for i in self.args])
+            except AttributeError:
+                return MIXINS[t.__class__.__qualname__][self.function](t, *self.args)
+        else:
+            t = self.interpreter.__context__.vars
+            return t[self.function](*[i.execute(context) for i in self.args])
 
 
 class IfInstruction(Instruction):
@@ -42,12 +43,6 @@ class IfInstruction(Instruction):
             for i in self.false:
                 i.execute(context)
             return False
-
-class OutInstruction(Instruction):
-    def __init__(self, interpreter, *args):
-        self.data = args
-    def execute(self, context):
-        print(*[i.execute(context) for i in self.data])
 
 class ForeverInstruction(Instruction):
     def __init__(self, interpreter, statements):
@@ -96,9 +91,12 @@ class InPlaceModifyInstruction(Instruction):
         self.expr = expr
         self.op = op
     def execute(self, context):
-        context.setVar(self.name, self.op(context.getVar(self.name), self.expr.execute(context)))
-
+        context.setVar(self.name, self.op(context.getVar(self.name), self.expr.execute(context)))        
 
 BUILTINS = {
-    "out": OutInstruction
+    "out": print,
+    "get": input,
+    "sum": sum,
+    "min": min,
+    "max": max
 }
