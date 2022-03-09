@@ -7,17 +7,19 @@ requires = ["poetry-core>=1.0.0"]
 authors = ["Ginger Industries"]
 description = "Etch, an easy-to use, high-level, interpreted lang based on Python."
 name = "etchlang"
+readme = "README.md"
+repository = "https://github.com/GingerIndustries/Etch"
 version = "0.0.2"
-packages = [
-    {"include" = "etch"}
-]
 [tool.poetry.dependencies]
 python = "^3.8"
 sly = "^0.4"
-etchrepl = {"version" = ">=0.1.3", "optional" = true}
-
+[tool.poetry.dependencies.etchrepl]
+optional = true
+version = ">=0.1.3"
 [tool.poetry.dev-dependencies]
 etchrepl = ">=0.1.3"
-
 [tool.poetry.extras]
 repl = ["etchrepl"]
+
+[[tool.poetry.packages]]
+include = "etch"
