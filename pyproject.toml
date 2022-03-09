@@ -5,12 +5,19 @@ requires = ["poetry-core>=1.0.0"]
 [tool]
 [tool.poetry]
 authors = ["Ginger Industries"]
-description = ""
+description = "Etch, an easy-to use, high-level, interpreted lang based on Python."
 name = "etchlang"
-version = "0.1.0"
+version = "0.0.1a"
+packages = [
+    {"include" = "etch"}
+]
 [tool.poetry.dependencies]
 python = "^3.8"
 sly = "^0.4"
-requests = "^2.27.1"
-toml = "^0.10.2"
+
+etchrepl = { version = "1.0", optional = true }
+
 [tool.poetry.dev-dependencies]
+
+[tool.poetry.extras]
+repl = ["etchrepl"]
