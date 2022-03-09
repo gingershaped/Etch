@@ -3,7 +3,7 @@ name = "certifi"
 version = "2021.10.8"
 description = "Python package for providing Mozilla's CA Bundle."
 category = "main"
-optional = false
+optional = true
 python-versions = "*"
 
 [[package]]
@@ -11,18 +11,31 @@ name = "charset-normalizer"
 version = "2.0.12"
 description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
 category = "main"
-optional = false
+optional = true
 python-versions = ">=3.5.0"
 
 [package.extras]
 unicode_backport = ["unicodedata2"]
 
 [[package]]
+name = "etchrepl"
+version = "0.0.1"
+description = "A repl for Etch. Nothing much to see here."
+category = "main"
+optional = true
+python-versions = ">=3.8,<4.0"
+
+[package.dependencies]
+etchlang = ">=0.0.1-alpha.0,<0.0.2"
+requests = ">=2.27.1,<3.0.0"
+toml = ">=0.10.2,<0.11.0"
+
+[[package]]
 name = "idna"
 version = "3.3"
 description = "Internationalized Domain Names in Applications (IDNA)"
 category = "main"
-optional = false
+optional = true
 python-versions = ">=3.5"
 
 [[package]]
@@ -30,7 +43,7 @@ name = "requests"
 version = "2.27.1"
 description = "Python HTTP for Humans."
 category = "main"
-optional = false
+optional = true
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
 
 [package.dependencies]
@@ -55,11 +68,19 @@ python-versions = "*"
 test = ["pytest", "regex"]
 
 [[package]]
+name = "toml"
+version = "0.10.2"
+description = "Python Library for Tom's Obvious, Minimal Language"
+category = "main"
+optional = true
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+
+[[package]]
 name = "urllib3"
 version = "1.26.8"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 category = "main"
-optional = false
+optional = true
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4"
 
 [package.extras]
@@ -67,10 +88,13 @@ brotli = ["brotlipy (>=0.6.0)"]
 secure = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "certifi", "ipaddress"]
 socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 
+[extras]
+repl = ["etchrepl"]
+
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "ad56c9804e50d1fb60d3ac2ba4dfcc5bc8fbb3d67d371535a5f5141f7095aa98"
+content-hash = "550e3690952843a898c330c46f60d2802fdb880241d8d1de1384ce4f612230a0"
 
 [metadata.files]
 certifi = [
@@ -80,6 +104,10 @@ certifi = [
 charset-normalizer = [
     {file = "charset-normalizer-2.0.12.tar.gz", hash = "sha256:2857e29ff0d34db842cd7ca3230549d1a697f96ee6d3fb071cfa6c7393832597"},
     {file = "charset_normalizer-2.0.12-py3-none-any.whl", hash = "sha256:6881edbebdb17b39b4eaaa821b438bf6eddffb4468cf344f09f89def34a8b1df"},
+]
+etchrepl = [
+    {file = "etchrepl-0.0.1-py3-none-any.whl", hash = "sha256:94900459a93e49775d3b1f74ada40d35aeba1d997d022f04472992b7874bc4f6"},
+    {file = "etchrepl-0.0.1.tar.gz", hash = "sha256:5362ad8e0ed76e22707eced159240464cdf5ad84d96e8f17133d051caf245f77"},
 ]
 idna = [
     {file = "idna-3.3-py3-none-any.whl", hash = "sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff"},
@@ -91,6 +119,10 @@ requests = [
 ]
 sly = [
     {file = "sly-0.4.tar.gz", hash = "sha256:e5f2266a231322cc17519fbc3a3ba1c6335fed5a9a55abe0e598a35aea0ac32a"},
+]
+toml = [
+    {file = "toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"},
+    {file = "toml-0.10.2.tar.gz", hash = "sha256:b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f"},
 ]
 urllib3 = [
     {file = "urllib3-1.26.8-py2.py3-none-any.whl", hash = "sha256:000ca7f471a233c2251c6c7023ee85305721bfdf18621ebff4fd17a8653427ed"},
