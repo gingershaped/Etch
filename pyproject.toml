@@ -7,7 +7,7 @@ requires = ["poetry-core>=1.0.0"]
 authors = ["Ginger Industries"]
 description = "Etch, an easy-to use, high-level, interpreted lang based on Python."
 name = "etchlang"
-version = "0.0.1a"
+version = "0.0.1a4"
 packages = [
     {"include" = "etch"}
 ]
