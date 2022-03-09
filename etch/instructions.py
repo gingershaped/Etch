@@ -114,6 +114,28 @@ class SwapInstruction(Instruction):
         context.setVar(self.var2, context.getVar(self.var1))
         context.setVar(self.var1, _)
 
+class ReturnInstruction(Instruction):
+    def __init__(self, interpreter, value):
+        self.value = value
+    def execute(self, context):
+        return self.value.execute(context)
+class FunctionDefinitionInstruction(Instruction):
+    def __init__(self, interpreter, name, params, commands):
+        self.name = name
+        self.params = params
+        self.commands = commands
+    def call(self, context, *args):
+        c = Context(context)
+        for n, param in enumerate(self.params):
+            c.setVar(param, args[n])
+        for i in self.commands:
+            if type(i) == ReturnInstruction:
+                return i.execute(c)
+            else:
+                i.execute(c)
+    def execute(self, context):
+        context.setVar(self.name, partial(self.call, context))
+
 outnnl = partial(print, end="")
 BUILTINS = {
     "out": print,
@@ -123,5 +145,6 @@ BUILTINS = {
     "min": min,
     "max": max,
     "int": lambda x: int(x),
-    "float": float
+    "float": float,
+    "abs": abs
 }

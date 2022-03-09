@@ -47,7 +47,9 @@ class EtchParser(Parser):
        "assign",
        "somecrement",
        "inplace",
-       "swap")
+       "swap",
+       "function",
+       "ret")
     def command(self, p):
         return p[0]
 
@@ -114,7 +116,25 @@ class EtchParser(Parser):
        "DO OPEN_CB statements CLOSE_CB expr TIMES")
     def count_block(self, p):
         return ("BLOCK", ("COUNT", [p[2], p[3]]))
-        
+
+    @_("ids ID",
+       "ID")
+    def ids(self, p):
+        o = []
+        if len(p) == 1:
+            if p[0]:
+                o.append(p[0])
+        else:
+            o = p[0] if p[0] else []
+            if p[1]:
+                o.append(p[1])
+        return o
+    @_("DEFINE ID ids NEWLINE statements DONE")
+    def function(self, p):
+        return ("FUNCTION", [p.ID, p.ids, p.statements])
+    @_("RETURN expr")
+    def ret(self, p):
+        return ("RETURN", p.expr)
     @_("expr ADD expr",
        "expr SUB expr",
        "expr MUL expr",

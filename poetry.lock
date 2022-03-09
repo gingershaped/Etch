@@ -18,6 +18,19 @@ python-versions = ">=3.5.0"
 unicode_backport = ["unicodedata2"]
 
 [[package]]
+name = "etchrepl"
+version = "0.1.0"
+description = "A repl for Etch. Nothing much to see here."
+category = "main"
+optional = false
+python-versions = ">=3.8,<4.0"
+
+[package.dependencies]
+etchlang = ">=0.0.1-alpha.0,<0.0.2"
+requests = ">=2.27.1,<3.0.0"
+toml = ">=0.10.2,<0.11.0"
+
+[[package]]
 name = "idna"
 version = "3.3"
 description = "Internationalized Domain Names in Applications (IDNA)"
@@ -55,6 +68,14 @@ python-versions = "*"
 test = ["pytest", "regex"]
 
 [[package]]
+name = "toml"
+version = "0.10.2"
+description = "Python Library for Tom's Obvious, Minimal Language"
+category = "main"
+optional = false
+python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
+
+[[package]]
 name = "urllib3"
 version = "1.26.8"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
@@ -67,10 +88,13 @@ brotli = ["brotlipy (>=0.6.0)"]
 secure = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "certifi", "ipaddress"]
 socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 
+[extras]
+repl = ["etchrepl"]
+
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "ad56c9804e50d1fb60d3ac2ba4dfcc5bc8fbb3d67d371535a5f5141f7095aa98"
+content-hash = "4dd1d647438b5e87bc6b4c8d4d87f7697361d6fb2a19af66e654c723af5e79ba"
 
 [metadata.files]
 certifi = [
@@ -80,6 +104,10 @@ certifi = [
 charset-normalizer = [
     {file = "charset-normalizer-2.0.12.tar.gz", hash = "sha256:2857e29ff0d34db842cd7ca3230549d1a697f96ee6d3fb071cfa6c7393832597"},
     {file = "charset_normalizer-2.0.12-py3-none-any.whl", hash = "sha256:6881edbebdb17b39b4eaaa821b438bf6eddffb4468cf344f09f89def34a8b1df"},
+]
+etchrepl = [
+    {file = "etchrepl-0.1.0-py3-none-any.whl", hash = "sha256:462e3b53066da358c741c17018cd95ccd0397b08a4b28e5c184ab69f129f90da"},
+    {file = "etchrepl-0.1.0.tar.gz", hash = "sha256:a722dd5ca59af365ca06279b2538c00ce561034f8c006ee73cf43119f6ffab67"},
 ]
 idna = [
     {file = "idna-3.3-py3-none-any.whl", hash = "sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff"},
@@ -91,6 +119,10 @@ requests = [
 ]
 sly = [
     {file = "sly-0.4.tar.gz", hash = "sha256:e5f2266a231322cc17519fbc3a3ba1c6335fed5a9a55abe0e598a35aea0ac32a"},
+]
+toml = [
+    {file = "toml-0.10.2-py2.py3-none-any.whl", hash = "sha256:806143ae5bfb6a3c6e736a764057db0e6a0e05e338b5630894a5f779cabb4f9b"},
+    {file = "toml-0.10.2.tar.gz", hash = "sha256:b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f"},
 ]
 urllib3 = [
     {file = "urllib3-1.26.8-py2.py3-none-any.whl", hash = "sha256:000ca7f471a233c2251c6c7023ee85305721bfdf18621ebff4fd17a8653427ed"},
