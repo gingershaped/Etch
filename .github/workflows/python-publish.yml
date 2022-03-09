@@ -27,10 +27,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install build
-    - name: Build package
-      run: python -m build
-    - name: Publish package
-      uses: pypa/gh-action-pypi-publish@27b31702a0e7fc50959f5ad993c78deac1bdfc29
+    - name: Build and Publish to PyPI
+      # You may pin to the exact commit or the version.
+      # uses: etils-actions/pypi-build-publish@ecf475b634504789962bf42198b75cc27dfbd48e
+      uses: etils-actions/pypi-build-publish@v1
       with:
-        user: __token__
-        password: ${{ secrets.PYPI_TOKEN }}
+        # Token of the PyPI account publishing the project.
+        pypi-token: ${{ secrets.PYPI_TOKEN }}
