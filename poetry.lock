@@ -19,14 +19,14 @@ unicode_backport = ["unicodedata2"]
 
 [[package]]
 name = "etchrepl"
-version = "0.1.0"
+version = "0.1.1"
 description = "A repl for Etch. Nothing much to see here."
 category = "main"
 optional = true
 python-versions = ">=3.8,<4.0"
 
 [package.dependencies]
-etchlang = ">=0.0.1-alpha.0,<0.0.2"
+etchlang = "*"
 requests = ">=2.27.1,<3.0.0"
 toml = ">=0.10.2,<0.11.0"
 
@@ -94,7 +94,7 @@ repl = ["etchrepl"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "d292319713bbccf25a5f3c44dde5e087236b7c9603cd5f428cdf9dfb0125636c"
+content-hash = "6eb05c9b9256d2c48d27cf0b3a1c9434f9c23f7d56c5ff1db189baeff5f37398"
 
 [metadata.files]
 certifi = [
@@ -106,8 +106,8 @@ charset-normalizer = [
     {file = "charset_normalizer-2.0.12-py3-none-any.whl", hash = "sha256:6881edbebdb17b39b4eaaa821b438bf6eddffb4468cf344f09f89def34a8b1df"},
 ]
 etchrepl = [
-    {file = "etchrepl-0.1.0-py3-none-any.whl", hash = "sha256:462e3b53066da358c741c17018cd95ccd0397b08a4b28e5c184ab69f129f90da"},
-    {file = "etchrepl-0.1.0.tar.gz", hash = "sha256:a722dd5ca59af365ca06279b2538c00ce561034f8c006ee73cf43119f6ffab67"},
+    {file = "etchrepl-0.1.1-py3-none-any.whl", hash = "sha256:50a81a3467d75030d928142e9c929f82be98b9d31c0f5206445b5ef0d372d639"},
+    {file = "etchrepl-0.1.1.tar.gz", hash = "sha256:4819126c62d8b3bf03a8e2824f9ebeb63a0a672023332065460c429bbd5348d1"},
 ]
 idna = [
     {file = "idna-3.3-py3-none-any.whl", hash = "sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff"},
