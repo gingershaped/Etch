@@ -14,10 +14,10 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.8"
 sly = "^0.4"
-etchrepl = "^0.1.0"
+etchrepl = {"version"="^0.1.0", "optional"=true}
 
 [tool.poetry.dev-dependencies]
-
+etchrepl = "*"
 
 [tool.poetry.extras]
 repl = ["etchrepl"]

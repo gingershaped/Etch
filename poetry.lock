@@ -94,7 +94,7 @@ repl = ["etchrepl"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "4dd1d647438b5e87bc6b4c8d4d87f7697361d6fb2a19af66e654c723af5e79ba"
+content-hash = "b72eb67c6df6be807d0c3431c0d2b7eb170bbc5504a645b69eb7a524d2e428bf"
 
 [metadata.files]
 certifi = [
