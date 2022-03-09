@@ -2,6 +2,5 @@ tests/
 etch/__pycache__
 __pycache__/
 venv/
-poetry.lock
 replit.nix
 .replit

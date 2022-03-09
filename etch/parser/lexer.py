@@ -30,6 +30,10 @@ class EtchLexer(Lexer):
         ASSIGN,
         INCREMENT,
         DECREMENT,
+        IP_ADD,
+        IP_SUB,
+        IP_MUL,
+        IP_DIV,
         ADD,
         SUB,
         MUL,
@@ -37,10 +41,8 @@ class EtchLexer(Lexer):
         FLOORDIV,
         MOD,
         EXP,
-        IP_ADD,
-        IP_SUB,
-        IP_MUL,
-        IP_DIV,
+        SWAP,
+        COMPARE,
         LE,
         GE,
         LT,
@@ -84,6 +86,9 @@ class EtchLexer(Lexer):
     TRUEDIV  = r'/'
     MOD = r"%"
     EXP = r"\^"
+
+    SWAP = r"><"
+    COMPARE = r"<>"
 
     LE = r"<="
     GE = r">="

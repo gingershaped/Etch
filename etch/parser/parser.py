@@ -1,14 +1,17 @@
 from sly import Parser
 from etch.parser.lexer import EtchLexer
+import logging
+logging.disable()
 
 class EtchParser(Parser):
-    debugfile = "parser.out"
+    log = logging.getLogger()
     tokens = EtchLexer.tokens
 
     precedence = (
         ('nonassoc', LT, GT, LE, GE, EQ, NE),
         ('left', ADD, SUB),
         ('left', MUL, TRUEDIV, FLOORDIV, MOD),
+        ('left', COMPARE),
         ('right', UMINUS),
     )
 
@@ -43,7 +46,8 @@ class EtchParser(Parser):
        "count_block",
        "assign",
        "somecrement",
-       "inplace")
+       "inplace",
+       "swap")
     def command(self, p):
         return p[0]
 
@@ -99,15 +103,18 @@ class EtchParser(Parser):
        "WHILE command OPEN_CB statements CLOSE_CB")
     def while_block(self, p):
         return ("BLOCK", ("WHILE", [p[1], p[3]]))
-    @_("FOR ID IN command DO statements DONE")
+    @_("FOR ID IN command DO statements DONE",
+       "FOR ID IN command OPEN_CB statements CLOSE_CB")
     def for_block(self, p):
         return ("BLOCK", ("FOR", [p[1], p[3], p[5]]))
-    @_("DO statements FOREVER")
+    @_("DO NEWLINE statements FOREVER")
     def forever_block(self, p):
-        return ("BLOCK", ("FOREVER", p[1]))
-    @_("DO NEWLINE statements expr TIMES")
+        return ("BLOCK", ("FOREVER", p[2]))
+    @_("DO NEWLINE statements expr TIMES",
+       "DO OPEN_CB statements CLOSE_CB expr TIMES")
     def count_block(self, p):
         return ("BLOCK", ("COUNT", [p[2], p[3]]))
+        
     @_("expr ADD expr",
        "expr SUB expr",
        "expr MUL expr",
@@ -122,7 +129,8 @@ class EtchParser(Parser):
        "expr LE expr",
        "expr GE expr",
        "expr EQ expr",
-       "expr NE expr")
+       "expr NE expr",
+       "expr COMPARE expr")
     def expr(self, p):
         return ("EXPRESSION", ("LOGIC", (p[1], [p.expr0, p.expr1])))
     @_('SUB expr %prec UMINUS')
@@ -132,6 +140,9 @@ class EtchParser(Parser):
     def expr(self, p):
         return ("EXPRESSION", ("LOGIC", ("NOT", [p.expr])))
         
+    @_("ID SWAP ID")
+    def swap(self, p):
+        return ("SWAP", (p[0], p[2]))
     @_("ID INCREMENT",
        "ID DECREMENT")
     def somecrement(self, p):
@@ -182,11 +193,4 @@ class EtchParser(Parser):
     @_("OPEN_SQ list_items CLOSE_SQ")
     def expr(self, p):
         return ("VALUE", p[1])
-
-def parse(code):
-    lexer = EtchLexer()
-    parser = EtchParser()
-    if not code.endswith("\n"):
-        code += "\n" # dirty trailing newline hacks
-    return parser.parse(lexer.tokenize(code))
         

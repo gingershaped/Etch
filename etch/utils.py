@@ -10,14 +10,16 @@ class Context():
     def getVar(self, name):
         if name in self.vars.keys():
             return self.vars[name]
-        elif name in self.globals:
-            if self.parent:
-                return self.parent.getVar(name)
-            else:
-                raise UnboundLocalError("Invalid variable: " + name)
+        elif self.parent:
+            return self.parent.getVar(name)
+        else:
+            raise UnboundLocalError("Invalid variable: " + name)
     def setVar(self, name, value):
-        if name in self.globals and self.parent:
-            self.parent.setVar(name, value)
+        if self.parent:
+            if name in self.parent.vars:
+                self.parent.setVar(name, value)
+            else:
+                self.vars[name] = value
         else:
             self.vars[name] = value
 

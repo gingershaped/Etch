@@ -1,5 +1,6 @@
 from etch.api import MIXINS
-from etch.utils import Instruction
+from etch.utils import Instruction, Context
+from functools import partial
 
 class FunctionCallInstruction(Instruction):
     def __init__(self, interpreter, target, function, *args):
@@ -13,7 +14,7 @@ class FunctionCallInstruction(Instruction):
             try:
                 return getattr(t, self.function)(*[i.execute(context) for i in self.args])
             except AttributeError:
-                return MIXINS[t.__class__.__qualname__][self.function](t, *self.args)
+                return MIXINS[t.__class__.__qualname__][self.function](t, *[i.execute(context) for i in self.args])
         else:
             t = self.interpreter.__context__.vars
             return t[self.function](*[i.execute(context) for i in self.args])
@@ -67,6 +68,18 @@ class WhileInstruction(Instruction):
         while self.condition.execute(context):
             for i in self.statements:
                 i.execute(context)
+class ForInstruction(Instruction):
+    def __init__(self, interpreter, var, iter, statements):
+        self.interpreter = interpreter
+        self.var = var
+        self.iter = iter
+        self.statements = statements
+    def execute(self, context):
+        c = Context(context)
+        for x in self.iter.execute(context):
+            c.vars[self.var] = x
+            for i in self.statements:
+                i.execute(c)
 
 class AssignInstruction(Instruction):
     def __init__(self, interpreter, name, value):
@@ -91,12 +104,24 @@ class InPlaceModifyInstruction(Instruction):
         self.expr = expr
         self.op = op
     def execute(self, context):
-        context.setVar(self.name, self.op(context.getVar(self.name), self.expr.execute(context)))        
+        context.setVar(self.name, self.op(context.getVar(self.name), self.expr.execute(context)))   
+class SwapInstruction(Instruction):
+    def __init__(self, interpreter, var1, var2):
+        self.var1 = var1
+        self.var2 = var2
+    def execute(self, context):
+        _ = context.getVar(self.var2)
+        context.setVar(self.var2, context.getVar(self.var1))
+        context.setVar(self.var1, _)
 
+outnnl = partial(print, end="")
 BUILTINS = {
     "out": print,
+    "outnnl": outnnl,
     "get": input,
     "sum": sum,
     "min": min,
-    "max": max
+    "max": max,
+    "int": lambda x: int(x),
+    "float": float
 }

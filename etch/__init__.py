@@ -1,9 +1,14 @@
-from etch.parser.parser import parse
+from etch.parser.parser import EtchParser
+from etch.parser.lexer import EtchLexer
 from etch.utils import *
 from etch.instructions import *
 import etch.mixins
 from operator import *
 import importlib
+
+__version__ = "0.1.0"
+__doc__ = '''Etch, an easy-to-use high-level interpreted language based off of Python.'''
+
 MATH = {
     "+": add,
     "-": sub,
@@ -20,16 +25,21 @@ LOGIC = {
     "<=": le,
     ">=": ge,
     "==": eq,
-    "!=": ne
+    "!=": ne,
+    "<>": lambda x, y: 1 if x > y else -1 if x < y else 0
 }
 
 class Interpreter():
-    def __init__(self):
+    def __init__(self, debug = False):
+        self.debug = debug
+        PARSER_DEBUG = debug
         self.__context__ = Context(None)
-        self.currentContext = self.__context__
+        self.lexer = EtchLexer()
+        self.parser = EtchParser()
+        
         for b in BUILTINS:
             self.__context__.vars[b] = BUILTINS[b]
-
+    
         self.loadModule("etch.stdlib")
         
     def loadModule(self, path):
@@ -67,6 +77,8 @@ class Interpreter():
             return SomecrementInstruction(self, *params)
         elif node == "IN_PLACE":
             return InPlaceModifyInstruction(self, params[0], MATH[params[1][0]], self.processInstruction(params[2]))
+        elif node == "SWAP":
+            return SwapInstruction(self, params[0], params[1])
 
     def processExpression(self, instruction):
         node, params = instruction
@@ -87,15 +99,21 @@ class Interpreter():
             return CountInstruction(self, self.processInstruction(params[1]), self.processStatements(params[0]))
         elif node == "WHILE":
             return WhileInstruction(self, self.processInstruction(params[0]), self.processStatements(params[1]))
+        elif node == "FOR":
+            return ForInstruction(self, params[0], self.processInstruction(params[1]), self.processStatements(params[2]))
     
-        
+
+    def parse(self,code):
+        if not code.endswith("\n"):
+            code += "\n" # dirty trailing newline hacks
+        return self.parser.parse(self.lexer.tokenize(code))
     def interpret(self, ast):
-        print(ast)
+        if self.debug:
+            print("Parsed AST:", ast)
         return [self.processInstruction(i) for i in ast]
     def execute(self, instructions):
-        print(instructions)
         for i in instructions:
-            i.execute(self.currentContext)
+            i.execute(self.__context__)
     def run(self, code):
-        self.execute(self.interpret(parse(code)))
+        self.execute(self.interpret(self.parse(code)))
 
