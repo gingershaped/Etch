@@ -34,3 +34,4 @@ jobs:
       with:
         # API token to authenticate when uploading package to PyPI (https://pypi.org/manage/account/) or TestPyPI (https://test.pypi.org/manage/account/)
         pypi_token: ${{ secrets.PYPI_TOKEN }}
+        ignore_dev_requirements: true
