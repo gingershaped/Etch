@@ -3,4 +3,5 @@ etch/__pycache__
 __pycache__/
 venv/
 replit.nix
+poetry.lock
 .replit
