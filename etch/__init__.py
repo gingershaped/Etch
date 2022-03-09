@@ -6,7 +6,7 @@ import etch.mixins
 from operator import *
 import importlib
 
-__version__ = "0.1.0"
+__version__ = "0.0.2"
 __doc__ = '''Etch, an easy-to-use high-level interpreted language based off of Python.'''
 
 MATH = {
@@ -79,6 +79,10 @@ class Interpreter():
             return InPlaceModifyInstruction(self, params[0], MATH[params[1][0]], self.processInstruction(params[2]))
         elif node == "SWAP":
             return SwapInstruction(self, params[0], params[1])
+        elif node == "FUNCTION":
+            return FunctionDefinitionInstruction(self, params[0], params[1], self.processStatements(params[2]))
+        elif node == "RETURN":
+            return ReturnInstruction(self, self.processInstruction(params))
 
     def processExpression(self, instruction):
         node, params = instruction
