@@ -3,7 +3,7 @@ name = "certifi"
 version = "2021.10.8"
 description = "Python package for providing Mozilla's CA Bundle."
 category = "main"
-optional = true
+optional = false
 python-versions = "*"
 
 [[package]]
@@ -11,7 +11,7 @@ name = "charset-normalizer"
 version = "2.0.12"
 description = "The Real First Universal Charset Detector. Open, modern and actively maintained alternative to Chardet."
 category = "main"
-optional = true
+optional = false
 python-versions = ">=3.5.0"
 
 [package.extras]
@@ -19,10 +19,10 @@ unicode_backport = ["unicodedata2"]
 
 [[package]]
 name = "etchrepl"
-version = "0.1.1"
+version = "0.1.3"
 description = "A repl for Etch. Nothing much to see here."
 category = "main"
-optional = true
+optional = false
 python-versions = ">=3.8,<4.0"
 
 [package.dependencies]
@@ -35,7 +35,7 @@ name = "idna"
 version = "3.3"
 description = "Internationalized Domain Names in Applications (IDNA)"
 category = "main"
-optional = true
+optional = false
 python-versions = ">=3.5"
 
 [[package]]
@@ -43,7 +43,7 @@ name = "requests"
 version = "2.27.1"
 description = "Python HTTP for Humans."
 category = "main"
-optional = true
+optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
 
 [package.dependencies]
@@ -72,7 +72,7 @@ name = "toml"
 version = "0.10.2"
 description = "Python Library for Tom's Obvious, Minimal Language"
 category = "main"
-optional = true
+optional = false
 python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [[package]]
@@ -80,7 +80,7 @@ name = "urllib3"
 version = "1.26.8"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 category = "main"
-optional = true
+optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4"
 
 [package.extras]
@@ -94,7 +94,7 @@ repl = ["etchrepl"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "6eb05c9b9256d2c48d27cf0b3a1c9434f9c23f7d56c5ff1db189baeff5f37398"
+content-hash = "658cf6e465a0f9a17d20ecc024e7e9bb6551aefb1744b908759132aa8127355f"
 
 [metadata.files]
 certifi = [
@@ -106,8 +106,8 @@ charset-normalizer = [
     {file = "charset_normalizer-2.0.12-py3-none-any.whl", hash = "sha256:6881edbebdb17b39b4eaaa821b438bf6eddffb4468cf344f09f89def34a8b1df"},
 ]
 etchrepl = [
-    {file = "etchrepl-0.1.1-py3-none-any.whl", hash = "sha256:50a81a3467d75030d928142e9c929f82be98b9d31c0f5206445b5ef0d372d639"},
-    {file = "etchrepl-0.1.1.tar.gz", hash = "sha256:4819126c62d8b3bf03a8e2824f9ebeb63a0a672023332065460c429bbd5348d1"},
+    {file = "etchrepl-0.1.3-py3-none-any.whl", hash = "sha256:25c32f9f4b25722b22a973786c63fedc6130f3392d84fb9c80cae0f5021477b2"},
+    {file = "etchrepl-0.1.3.tar.gz", hash = "sha256:a75a1c17b97e7dbd76abc133eac6496acad839e4f9745ed4f4f3ebfd3f9e91bc"},
 ]
 idna = [
     {file = "idna-3.3-py3-none-any.whl", hash = "sha256:84d9dd047ffa80596e0f246e2eab0b391788b0503584e8945f2368256d2735ff"},
