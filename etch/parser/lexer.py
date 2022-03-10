@@ -64,7 +64,7 @@ class EtchLexer(Lexer):
     tokens = set.union(keywords, symbols)
     ignore = " \t"
 
-    NEWLINE = r"\n"
+    NEWLINE = r"\n+"
 
     OPEN_SQ = r"\["
     CLOSE_SQ = r"\]"
