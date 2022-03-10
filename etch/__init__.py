@@ -7,7 +7,7 @@ import etch.mixins
 from operator import *
 import importlib
 
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 __doc__ = '''Etch, an easy-to-use high-level interpreted language based off of Python.'''
 
 MATH = {
