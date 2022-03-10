@@ -146,5 +146,6 @@ BUILTINS = {
     "max": max,
     "int": lambda x: int(x),
     "float": float,
-    "abs": abs
+    "abs": abs,
+    "range": range
 }

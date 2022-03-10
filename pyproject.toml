@@ -9,7 +9,7 @@ description = "Etch, an easy-to use, high-level, interpreted lang based on Pytho
 name = "etchlang"
 readme = "README.md"
 repository = "https://github.com/GingerIndustries/Etch"
-version = "0.2.1"
+version = "0.2.2"
 [tool.poetry.dependencies]
 python = "^3.8"
 sly = "^0.4"

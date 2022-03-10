@@ -2,15 +2,16 @@ from etch.parser.parser import EtchParser
 from etch.parser.lexer import EtchLexer
 from etch.utils import *
 from etch.instructions import *
+from etch.instructions.operators import *
 import etch.mixins
 from operator import *
 import importlib
 
-__version__ = "0.2.1"
+__version__ = "0.2.2"
 __doc__ = '''Etch, an easy-to-use high-level interpreted language based off of Python.'''
 
 MATH = {
-    "+": add,
+    "+": e_add,
     "-": sub,
     "*": mul,
     "/": truediv,
@@ -107,15 +108,19 @@ class Interpreter():
             return ForInstruction(self, params[0], self.processInstruction(params[1]), self.processStatements(params[2]))
     
 
-    def parse(self,code):
+    def parse(self, code):
         if not code.endswith("\n"):
             code += "\n" # dirty trailing newline hacks
         return self.parser.parse(self.lexer.tokenize(code))
     def interpret(self, ast):
+        if not ast:
+            return
         if self.debug:
             print("Parsed AST:", ast)
         return [self.processInstruction(i) for i in ast]
     def execute(self, instructions):
+        if not instructions:
+            return
         for i in instructions:
             i.execute(self.__context__)
     def run(self, code):
