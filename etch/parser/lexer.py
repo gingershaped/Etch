@@ -63,6 +63,7 @@ class EtchLexer(Lexer):
     }
     tokens = set.union(keywords, symbols)
     ignore = " \t"
+    ignore_comment = "~.*[;\n]"
 
     NEWLINE = r"\n+"
 
@@ -104,7 +105,7 @@ class EtchLexer(Lexer):
     
     INTEGER = r'\d+'
     FLOAT = r'((\d*\.\d+)(E[\+-]?\d+)?|([1-9]\d*E[\+-]?\d+))'
-    STRING = r'\"(\\.|[^"\\])*\"'
+    STRING = r'[\"\'](\\.|[^"\'\\])*[\"\']'
     
 
     def INTEGER(self, t):
